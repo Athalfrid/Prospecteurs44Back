@@ -1,0 +1,6 @@
+@Prospecteurs44Back_HostAddress = http://localhost:5002
+
+GET {{Prospecteurs44Back_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,68 @@
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / VS Code / Visual Studio
+.vscode/
+.idea/
+*.code-workspace
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# DotCover
+*.dotCover
+
+# Logs
+*.log
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# Others
+*.vspscc
+*.vssscc
+.vs/
+_ReSharper*/
+*.resharper
+
+# Configuration files
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# JetBrains Rider
+.idea/
+
+# IIS Express
+*.vs/
+
+# MacOS / Linux
+.DS_Store
+*.swp
+
+# Windows thumbnails
+Thumbs.db
+ehthumbs.db
+
+# Test Results
+TestResults/
+*.trx
+
+# Coverage reports
+coverage/
+coverage*.json
+*.lcov
+*.cobertura.xml
