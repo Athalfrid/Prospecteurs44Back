@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Prospecteurs44Back.Data;
@@ -11,9 +12,11 @@ using Prospecteurs44Back.Data;
 namespace Prospecteurs44Back.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250605095020_ModificationPourLeForum")]
+    partial class ModificationPourLeForum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,7 +131,7 @@ namespace Prospecteurs44Back.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("ClosedAt")
+                    b.Property<DateTime>("ClosedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Content")
@@ -243,7 +246,7 @@ namespace Prospecteurs44Back.Migrations
                         .IsRequired();
 
                     b.HasOne("Prospecteurs44Back.Model.Topic", "Topic")
-                        .WithMany("Messages")
+                        .WithMany()
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -277,11 +280,6 @@ namespace Prospecteurs44Back.Migrations
             modelBuilder.Entity("Prospecteurs44Back.Model.Event", b =>
                 {
                     b.Navigation("UsersInscrits");
-                });
-
-            modelBuilder.Entity("Prospecteurs44Back.Model.Topic", b =>
-                {
-                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("Prospecteurs44Back.Model.User", b =>

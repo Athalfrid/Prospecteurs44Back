@@ -16,11 +16,15 @@ namespace Prospecteurs44Back.Model
         public string? Content { get; set; }
 
         [DataType(DataType.DateTime)]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [DataType(DataType.DateTime)]
         public DateTime? UpdatedAt { get; set; }
 
-        public bool IsClosed { get; set; }
+        public bool IsClosed { get; set; } = false;
+
+        public DateTime? ClosedAt { get; set; } 
+
+        public List<TopicMessages>? Messages { get; set; }
     }
 }

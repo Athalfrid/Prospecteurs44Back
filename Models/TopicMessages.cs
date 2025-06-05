@@ -9,20 +9,19 @@ namespace Prospecteurs44Back.Model
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Le contenu du message est obligatoire.")]
-        public string Content { get; set; }
+        public string? Content { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // Relation vers le Topic
         public int TopicId { get; set; }
 
         [ForeignKey("TopicId")]
-        public Topic Topic { get; set; }
-
-        // Optionnel : relation vers l’auteur
-        public int AuthorId { get; set; }
+        public required Topic Topic { get; set; }
 
         [ForeignKey("AuthorId")]
-        public User Author { get; set; }
+        public required User Author { get; set; }
+
+        public bool IsReported { get; set; } = false;
     }
 }

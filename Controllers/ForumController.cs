@@ -5,12 +5,13 @@ using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Prospecteurs44Back.Data;
 using Prospecteurs44Back.Model;
+using Prospecteurs44Back.DTO;
 
 namespace MyApp.Namespace
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ForumController : ControllerBase
     {
 
@@ -42,27 +43,34 @@ namespace MyApp.Namespace
 
 
         [HttpPost]
-        public async Task<ActionResult<Topic>> CreateToplic(Topic newTopic)
+        public async Task<ActionResult<Topic>> CreateTopic(TopicDTO topicDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            var newTopic = new Topic
+            {
+                Title = topicDTO.Title,
+                Content = topicDTO.Content,
+            };
             _context.Topics.Add(newTopic);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("Topic créé avec succès", new { id = newTopic.Id }, newTopic);
+            return CreatedAtAction(nameof(GetTopic), new { id = newTopic.Id }, newTopic);
         }
 
-        [HttpPost("{id}")]
-        public async Task<ActionResult<Topic>> UpdateToplic(int id, Topic updatedTopic)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateTopic(int id, Topic updatedTopic)
         {
             if (id != updatedTopic.Id)
             {
-                return BadRequest("Topic introuvable !");
+                return BadRequest("Erreur identifiant !");
             }
 
             _context.Entry(updatedTopic).State = EntityState.Modified;
+            updatedTopic.UpdatedAt = DateTime.UtcNow;
 
             try
             {
@@ -72,7 +80,7 @@ namespace MyApp.Namespace
             {
                 if (!TopicExists(id))
                 {
-                    return NotFound("Topic introuvable !");
+                    return NotFound("Topic introuvable en bdd !");
                 }
                 else
                 {
@@ -111,7 +119,8 @@ namespace MyApp.Namespace
             }
 
             topic.IsClosed = true;
-            topic.UpdatedAt = DateTime.Now;
+            topic.UpdatedAt = DateTime.UtcNow;
+            topic.ClosedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
 

@@ -21,6 +21,11 @@ namespace Prospecteurs44Back.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Topic>()
+            .HasMany(t => t.Messages)
+            .WithOne(m => m.Topic)
+            .HasForeignKey(m => m.TopicId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         }
     }
