@@ -25,13 +25,13 @@ namespace MyApp.Namespace
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Topic>>> GetTopics()
         {
-            return await _context.Topics.ToListAsync();
+            return await _context.Topics.Include(t => t.Messages).ToListAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Topic>> GetTopic(int id)
         {
-            var topic = await _context.Topics.FindAsync(id);
+            var topic = await _context.Topics.Include(t => t.Messages).FirstOrDefaultAsync(t => t.Id == id);
 
             if (topic == null)
             {
