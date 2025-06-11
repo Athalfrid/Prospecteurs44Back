@@ -45,7 +45,7 @@ namespace MyApp.Namespace
                 }
             })
             .ToListAsync();
-
+        
             return Ok(messages);
         }
 

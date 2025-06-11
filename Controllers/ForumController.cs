@@ -25,7 +25,29 @@ namespace MyApp.Namespace
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Topic>>> GetTopics()
         {
-            return await _context.Topics.Include(t => t.Messages).ToListAsync();
+            var topicsWithLastMessage = await _context.Topics
+                .Select(t => new
+                {
+                    t.Id,
+                    t.Title,
+                    t.Content,
+                    t.IsClosed,
+                    t.ClosedAt,
+                    t.CreatedAt,
+                    messages = t.Messages
+                        .OrderByDescending(m => m.CreatedAt)
+                        .Select(m => new
+                        {
+                            m.Content,
+                            m.CreatedAt,
+                            AuthorPseudo = m.Author.UserPseudo
+                        })
+                        .FirstOrDefault()
+                })
+                .ToListAsync();
+
+            return Ok(topicsWithLastMessage);
+
         }
 
         [HttpGet("{id}")]

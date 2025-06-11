@@ -23,8 +23,8 @@ namespace Prospecteurs44Back.Model
 
         public bool IsClosed { get; set; } = false;
 
-        public DateTime? ClosedAt { get; set; } 
+        public DateTime? ClosedAt { get; set; }
 
-        public List<TopicMessages>? Messages { get; set; }
+        public List<TopicMessages> Messages { get; set; } = new();
     }
 }
